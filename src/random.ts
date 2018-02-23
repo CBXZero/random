@@ -22,20 +22,21 @@ export class Random {
 
     static randomObject<T>(typeData: new () => T): T {
         var result = new typeData();
-        for(var i of Object.getOwnPropertyNames(result)) {
-            var propertyType = typeof(result[i]);
+        var properties = Object.getOwnPropertyNames(result);
+        for(var i=0; i < properties.length; i++) {
+            var propertyType = typeof(result[properties[i]]);
             switch (propertyType) {
                 case "number":
-                    result[i] = this.randomNumber();
+                    result[properties[i]] = this.randomNumber();
                     break;
                 case "boolean":
-                    result[i] = this.randomBoolean();
+                    result[properties[i]] = this.randomBoolean();
                     break;
                 case "string":
-                    result[i] = this.randomString();
+                    result[properties[i]] = this.randomString();
                     break;
                 default:
-                    result[i] = {};
+                    result[properties[i]] = {};
                     break;
             }
         }

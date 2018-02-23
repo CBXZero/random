@@ -20,21 +20,21 @@ var Random = /** @class */ (function () {
     };
     Random.randomObject = function (typeData) {
         var result = new typeData();
-        for (var _i = 0, _a = Object.getOwnPropertyNames(result); _i < _a.length; _i++) {
-            var i = _a[_i];
-            var propertyType = typeof (result[i]);
+        var properties = Object.getOwnPropertyNames(result);
+        for (var i = 0; i < properties.length; i++) {
+            var propertyType = typeof (result[properties[i]]);
             switch (propertyType) {
                 case "number":
-                    result[i] = this.randomNumber();
+                    result[properties[i]] = this.randomNumber();
                     break;
                 case "boolean":
-                    result[i] = this.randomBoolean();
+                    result[properties[i]] = this.randomBoolean();
                     break;
                 case "string":
-                    result[i] = this.randomString();
+                    result[properties[i]] = this.randomString();
                     break;
                 default:
-                    result[i] = {};
+                    result[properties[i]] = {};
                     break;
             }
         }
