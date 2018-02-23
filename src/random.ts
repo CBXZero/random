@@ -1,4 +1,4 @@
-export namespace Random {
+export static class Random {
     function randomString():string {
         var possibleChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
         var length = Math.floor(Math.random() * 50) + 1;
@@ -37,7 +37,8 @@ export namespace Random {
                     result[i] = {};
                     break;
             }
-
         }
+
+        return result;
     } 
 }
