@@ -22,7 +22,7 @@ export class Random {
 
     static randomObject<T>(typeData: new () => T): T {
         var result = new typeData();
-        for(var i in Object.getOwnPropertyNames(result)) {
+        for(var i of Object.getOwnPropertyNames(result)) {
             var propertyType = typeof(result[i]);
             switch (propertyType) {
                 case "number":
