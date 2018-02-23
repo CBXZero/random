@@ -20,7 +20,7 @@ var Random = /** @class */ (function () {
     };
     Random.randomObject = function (typeData) {
         var result = new typeData();
-        for (var i in Object.getOwnPropertyNames) {
+        for (var i in Object.getOwnPropertyNames(result)) {
             var propertyType = typeof (result[i]);
             switch (propertyType) {
                 case "number":
