@@ -1,5 +1,6 @@
-export static class Random {
-    function randomString():string {
+export class Random {
+
+    static randomString():string {
         var possibleChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
         var length = Math.floor(Math.random() * 50) + 1;
 
@@ -11,27 +12,27 @@ export static class Random {
         return result;
     }
 
-    function randomNumber(): number {
+    static randomNumber(): number {
         return Math.floor(Math.random() * Number.MAX_VALUE);
     }
 
-    function randomBoolean(): boolean {
+    static randomBoolean(): boolean {
         return Math.floor(Math.random() * 2) === 0 ? true : false;
     }
 
-    function randomObject<T>(typeData: new () => T): T {
+    static randomObject<T>(typeData: new () => T): T {
         var result = new typeData();
         for(var i in Object.getOwnPropertyNames) {
             var propertyType = typeof(result[i]);
             switch (propertyType) {
                 case "number":
-                    result[i] = randomNumber();
+                    result[i] = this.randomNumber();
                     break;
                 case "boolean":
-                    result[i] = randomBoolean();
+                    result[i] = this.randomBoolean();
                     break;
                 case "string":
-                    result[i] = randomString();
+                    result[i] = this.randomString();
                     break;
                 default:
                     result[i] = {};
