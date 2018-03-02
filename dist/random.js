@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Random = /** @class */ (function () {
     function Random() {
     }
-    Random.randomString = function () {
+    Random.String = function () {
         var possibleChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
         var length = Math.floor(Math.random() * 50) + 1;
         var result = "";
@@ -12,26 +12,26 @@ var Random = /** @class */ (function () {
         }
         return result;
     };
-    Random.randomNumber = function () {
+    Random.Number = function () {
         return Math.floor(Math.random() * Number.MAX_VALUE);
     };
-    Random.randomBoolean = function () {
+    Random.Boolean = function () {
         return Math.floor(Math.random() * 2) === 0 ? true : false;
     };
-    Random.randomObject = function (typeData) {
+    Random.Object = function (typeData) {
         var result = new typeData();
         var properties = Object.getOwnPropertyNames(result);
         for (var i = 0; i < properties.length; i++) {
             var propertyType = typeof (result[properties[i]]);
             switch (propertyType) {
                 case "number":
-                    result[properties[i]] = this.randomNumber();
+                    result[properties[i]] = this.Number();
                     break;
                 case "boolean":
-                    result[properties[i]] = this.randomBoolean();
+                    result[properties[i]] = this.Boolean();
                     break;
                 case "string":
-                    result[properties[i]] = this.randomString();
+                    result[properties[i]] = this.String();
                     break;
                 default:
                     result[properties[i]] = {};

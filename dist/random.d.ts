@@ -1,6 +1,6 @@
 export declare class Random {
-    static randomString(): string;
-    static randomNumber(): number;
-    static randomBoolean(): boolean;
-    static randomObject<T>(typeData: new () => T): T;
+    static String(): string;
+    static Number(): number;
+    static Boolean(): boolean;
+    static Object<T>(typeData: new () => T): T;
 }

@@ -1,6 +1,6 @@
 {
   "name": "random-test-values",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A typescript library for generating random values for testing",
   "main": "dist/index.js",
   "scripts": {
@@ -11,5 +11,9 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "jasmine": "^2.9.0"
+  },
+  "repository" :  {
+    "type" : "git",
+    "url" : "https://github.com/CBXZero/random.git"
   }
 }
