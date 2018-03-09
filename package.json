@@ -4,7 +4,7 @@
   "description": "A typescript library for generating random values for testing",
   "main": "dist/index.js",
   "scripts": {
-    "test": "mocha --reporter nyan --compilers ts:ts-node/register \"src/**/*.test.ts\""
+    "test": "mocha --reporter spec --compilers ts:ts-node/register \"src/**/*.test.ts\""
   },
   "author": "CBXZero",
   "license": "ISC",
