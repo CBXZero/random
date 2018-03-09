@@ -4,16 +4,22 @@
   "description": "A typescript library for generating random values for testing",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "mocha --reporter nyan --compilers ts:ts-node/register \"src/**/*.test.ts\""
   },
   "author": "CBXZero",
   "license": "ISC",
   "types": "dist/index.d.ts",
   "devDependencies": {
-    "jasmine": "^2.9.0"
+    "@types/chai": "^4.1.2",
+    "@types/mocha": "^2.2.48",
+    "chai": "^4.1.2",
+    "jasmine": "^2.9.0",
+    "mocha": "^5.0.4",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
   },
-  "repository" :  {
-    "type" : "git",
-    "url" : "https://github.com/CBXZero/random.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CBXZero/random.git"
   }
 }
