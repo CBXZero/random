@@ -1,5 +1,7 @@
 # Random Test Values
 
+[![Build Status](https://travis-ci.org/CBXZero/random.svg?branch=master)](https://travis-ci.org/CBXZero/random)
+
 ## Installing
 
 ```
