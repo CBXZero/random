@@ -1,8 +1,28 @@
 export class Random {
 
-    static String():string {
-        var possibleChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-        var length = Math.floor(Math.random() * 50) + 1;
+    static String(constraints: {blackListString?: string, whiteListString?: string, minLength?: number
+    maxLength?: number} = {minLength: 5, maxLength: 20}):string {
+        let possibleChar:string = constraints.whiteListString == undefined ? 
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()" : constraints.whiteListString;
+        
+        constraints.
+        blackListString = constraints.blackListString == undefined ? "" : constraints.blackListString;
+        for(var i=0; i < constraints.blackListString.length; i++) {
+            possibleChar = possibleChar.replace(constraints.blackListString[i], "");
+        }
+
+        if(possibleChar.length == 0) {
+            throw new Error("No Possible Characters");
+        }
+
+        constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
+        constraints.maxLength = constraints.maxLength == undefined ? 5 : constraints.maxLength;
+
+        console.log(constraints);
+
+        var length = Random.Number({min: constraints.minLength, max: constraints.maxLength});
+
+        console.log(length);
 
         var result = "";
         for(var i=0; i < length; i++) {
@@ -12,8 +32,14 @@ export class Random {
         return result;
     }
 
-    static Number(): number {
-        return Math.floor(Math.random() * Number.MAX_VALUE);
+    static Number(constraints: {max?: number, min?: number} = {max: Number.MAX_VALUE, min: Number.MIN_VALUE}): number {
+        constraints.max = constraints.max == undefined ? Number.MAX_VALUE : constraints.max
+        constraints.min = constraints.min == undefined ? Number.MIN_VALUE : constraints.min
+
+        if(constraints.min > constraints.max) {
+            throw new Error("Minimum value exceeds Maximum value");
+        }
+        return Math.floor(Math.random() * (constraints.max - constraints.min) + constraints.min);
     }
 
     static Boolean(): boolean {
