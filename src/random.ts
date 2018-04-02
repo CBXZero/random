@@ -18,11 +18,7 @@ export class Random {
         constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
         constraints.maxLength = constraints.maxLength == undefined ? 5 : constraints.maxLength;
 
-        console.log(constraints);
-
         var length = Random.Number({min: constraints.minLength, max: constraints.maxLength});
-
-        console.log(length);
 
         var result = "";
         for(var i=0; i < length; i++) {
