@@ -1,6 +1,6 @@
 {
   "name": "random-test-values",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A typescript library for generating random values for testing",
   "main": "dist/index.js",
   "scripts": {
