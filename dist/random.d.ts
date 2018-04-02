@@ -1,6 +1,14 @@
 export declare class Random {
-    static String(): string;
-    static Number(): number;
+    static String(constraints?: {
+        blackListString?: string;
+        whiteListString?: string;
+        minLength?: number;
+        maxLength?: number;
+    }): string;
+    static Number(constraints?: {
+        max?: number;
+        min?: number;
+    }): number;
     static Boolean(): boolean;
     static Object<T>(typeData: new () => T): T;
 }
