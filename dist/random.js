@@ -6,7 +6,7 @@ var Random = /** @class */ (function () {
     Random.String = function (constraints) {
         if (constraints === void 0) { constraints = { minLength: 5, maxLength: 20 }; }
         var possibleChar = constraints.whiteListString == undefined ?
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()" : constraints.whiteListString;
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" : constraints.whiteListString;
         constraints.
             blackListString = constraints.blackListString == undefined ? "" : constraints.blackListString;
         for (var i = 0; i < constraints.blackListString.length; i++) {
@@ -16,7 +16,7 @@ var Random = /** @class */ (function () {
             throw new Error("No Possible Characters");
         }
         constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
-        constraints.maxLength = constraints.maxLength == undefined ? 5 : constraints.maxLength;
+        constraints.minLength = constraints.minLength == undefined ? 5 : constraints.minLength;
         var length = Random.Number({ min: constraints.minLength, max: constraints.maxLength });
         var result = "";
         for (var i = 0; i < length; i++) {

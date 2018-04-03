@@ -3,7 +3,7 @@ export class Random {
     static String(constraints: {blackListString?: string, whiteListString?: string, minLength?: number
     maxLength?: number} = {minLength: 5, maxLength: 20}):string {
         let possibleChar:string = constraints.whiteListString == undefined ? 
-            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()" : constraints.whiteListString;
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" : constraints.whiteListString;
         
         constraints.
         blackListString = constraints.blackListString == undefined ? "" : constraints.blackListString;
@@ -16,7 +16,7 @@ export class Random {
         }
 
         constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
-        constraints.maxLength = constraints.maxLength == undefined ? 5 : constraints.maxLength;
+        constraints.minLength = constraints.minLength == undefined ? 5 : constraints.minLength;
 
         var length = Random.Number({min: constraints.minLength, max: constraints.maxLength});
 
