@@ -54,7 +54,7 @@ var Random = /** @class */ (function () {
         return Math.floor(Math.random() * 2) === 0 ? true : false;
     };
     Random.Date = function (constraints) {
-        if (constraints === void 0) { constraints = { before: new Date(8640000000000000), after: new Date(-8640000000000000) }; }
+        if (constraints === void 0) { constraints = { after: new Date(-8640000000000000), before: new Date(8640000000000000) }; }
         var numberConstraints = {};
         numberConstraints.max = constraints.before == undefined ? 8640000000000000 : constraints.before.valueOf();
         numberConstraints.min = constraints.after == undefined ? -8640000000000000 : constraints.after.valueOf();

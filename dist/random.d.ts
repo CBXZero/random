@@ -20,8 +20,8 @@ export declare class Random {
     }): number;
     static Boolean(): boolean;
     static Date(constraints?: {
-        before?: Date;
         after?: Date;
+        before?: Date;
     }): Date;
     static Array<T>(typeData: new () => T, length: number): T[];
     static Object<T>(typeData: new () => T): T;

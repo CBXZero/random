@@ -61,7 +61,7 @@ export class Random {
         return Math.floor(Math.random() * 2) === 0 ? true : false;
     }
 
-    static Date(constraints: {before?: Date, after?: Date} = {before: new Date(8640000000000000), after: new Date(-8640000000000000)}): Date {
+    static Date(constraints: {after?: Date, before?: Date} = {after: new Date(-8640000000000000), before: new Date(8640000000000000)}): Date {
         var numberConstraints: {max?:number, min?:number} = {};
         numberConstraints.max = constraints.before == undefined ? 8640000000000000 : constraints.before.valueOf();
         numberConstraints.min = constraints.after == undefined ? -8640000000000000 : constraints.after.valueOf();
