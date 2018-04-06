@@ -50,7 +50,49 @@ describe(`Random Library - Number`, () => {
         var value = 5;
         var result = Random.Number({min: value, max: value});
         Assert.equal(result, value);
-    })
+    });
+});
+
+describe(`Random Library - DecimalNumber`, () => {
+    it(`Should not return the same number twice in a row`, () => {
+        Assert.notEqual(Random.DecimalNumber(), Random.DecimalNumber());
+    });
+
+    it(`Should only return numbers less than or equal to the max number`, () => {
+        Assert.isAtMost(Random.DecimalNumber({max: 2}), 2);
+    });
+
+    it(`Should only return numbers greater than or equal to the min number`, () => {
+        Assert.isAtLeast(Random.DecimalNumber({min: Number.MAX_VALUE - 50}), Number.MAX_VALUE - 50);
+    });
+
+    it(`Should only return numbers between max and min inclusive`, () => {
+        var min = 100;
+        var max = 200;
+        var result = Random.DecimalNumber({min: 100, max: 200});
+        Assert.isAtLeast(result, min);
+        Assert.isAtMost(result, max);
+    });
+
+    it(`Should throw an error when min is greater than max`, () => {
+        try {
+            Random.DecimalNumber({min:5, max: 1});
+        } catch(ex) {
+            return;
+        }
+        Assert.fail(`Error wasn't thrown`);
+    });
+
+    it(`Should return the number passed in when min and max are the same`, () => {
+        var value = 5;
+        var result = Random.DecimalNumber({min: value, max: value});
+        Assert.equal(result, value);
+    });
+    
+    it(`Should return a number with sufficient number of decimal places`, () => {
+        var result = Random.DecimalNumber({min: 0, max: 1, maxDecimalPlaces: 10});
+        Assert.isAtMost(result.toString().length, 12, `Improper length, output number was ${result}`);
+    });
 });
 
 describe(`Random Library - String`, () => {
@@ -132,8 +174,26 @@ describe(`Random Library - Boolean`, () => {
             r ? trueCount++ : falseCount++;
         });
 
-        Assert.closeTo(trueCount, 50, 10);
-        Assert.closeTo(falseCount, 50, 10);
+        Assert.closeTo(trueCount, 50, 15);
+        Assert.closeTo(falseCount, 50, 15);
+    });
+});
+
+describe(`Random Library - Date`, () => {
+    it(`Does not create the same date twice in a row`, () => {
+        Assert.notEqual(Random.Date(), Random.Date());
+    });
+
+    it(`Creates a date that is at least before given date`, () => {
+        var testDate = new Date();
+        const result = Random.Date({before: testDate});
+        Assert.isAtMost(result.valueOf(), testDate.valueOf(), `expected ${result} to be before ${testDate}`);
+    });
+
+    it(`Creates a date that is at least after given date`, () => {
+        var testDate = new Date();
+        const result = Random.Date({after: testDate});
+        Assert.isAtLeast(result.valueOf(), testDate.valueOf(), `expected ${result} to be after ${testDate}`);
     });
 });
 
@@ -143,5 +203,28 @@ describe(`Random Library - Object`, () => {
         var secondTest = Random.Object(TestClass);
 
         Assert.notDeepEqual(firstTest, secondTest);
+    });
+});
+
+describe(`Random Library - Array`, () => {
+    it(`Should return an array of correct type with two different objects`, () => {
+        var result = Random.Array(TestClass, 2);
+
+        Assert.notDeepEqual(result[0], result[1]);
+    });
+
+    it(`Should return an array of appropriate length`, () => {
+        var result = Random.Array(TestClass, 500);
+        Assert.equal(result.length, 500);
+    });
+
+    it(`Should return populated objects in the array`, () => {
+        var result = Random.Array(TestClass, 1);
+        Assert.isNotNull(result[0].testString);
+    });
+
+    it(`Should work with non-object Random Arrays`, () => {
+        var result = Random.Array(String, 5);
+        Assert.typeOf(result[0], "string");
     });
 });

@@ -36,34 +36,58 @@ var Random = /** @class */ (function () {
     };
     Random.Number = function (constraints) {
         if (constraints === void 0) { constraints = { max: Number.MAX_VALUE, min: Number.MIN_VALUE }; }
+        return Math.floor(Random.DecimalNumber(constraints));
+    };
+    Random.DecimalNumber = function (constraints) {
+        if (constraints === void 0) { constraints = { max: Number.MAX_VALUE, min: Number.MIN_VALUE }; }
         constraints.max = constraints.max == undefined ? Number.MAX_VALUE : constraints.max;
         constraints.min = constraints.min == undefined ? Number.MIN_VALUE : constraints.min;
         if (constraints.min > constraints.max) {
             throw new Error("Minimum value exceeds Maximum value");
         }
-        return Math.floor(Math.random() * (constraints.max - constraints.min) + constraints.min);
+        if (constraints.maxDecimalPlaces == null) {
+            return Math.random() * (constraints.max - constraints.min) + constraints.min;
+        }
+        return parseFloat((Math.random() * (constraints.max - constraints.min) + constraints.min).toFixed(constraints.maxDecimalPlaces));
     };
     Random.Boolean = function () {
         return Math.floor(Math.random() * 2) === 0 ? true : false;
+    };
+    Random.Date = function (constraints) {
+        if (constraints === void 0) { constraints = { before: new Date(8640000000000000), after: new Date(-8640000000000000) }; }
+        var numberConstraints = {};
+        numberConstraints.max = constraints.before == undefined ? 8640000000000000 : constraints.before.valueOf();
+        numberConstraints.min = constraints.after == undefined ? -8640000000000000 : constraints.after.valueOf();
+        return new Date(Random.Number(numberConstraints));
+    };
+    Random.Array = function (typeData, length) {
+        var results = [];
+        for (var i = 0; i < length; i++) {
+            var objectToAdd = Random.Object(typeData);
+            results.push(objectToAdd);
+        }
+        return results;
     };
     Random.Object = function (typeData) {
         var result = new typeData();
         var properties = Object.getOwnPropertyNames(result);
         for (var i = 0; i < properties.length; i++) {
             var propertyType = typeof (result[properties[i]]);
-            switch (propertyType) {
-                case "number":
-                    result[properties[i]] = this.Number();
-                    break;
-                case "boolean":
-                    result[properties[i]] = this.Boolean();
-                    break;
-                case "string":
-                    result[properties[i]] = this.String();
-                    break;
-                default:
-                    result[properties[i]] = {};
-                    break;
+            if (Object.getOwnPropertyDescriptor(result, properties[i]).writable == true) {
+                switch (propertyType) {
+                    case "number":
+                        result[properties[i]] = this.Number();
+                        break;
+                    case "boolean":
+                        result[properties[i]] = this.Boolean();
+                        break;
+                    case "string":
+                        result[properties[i]] = this.String();
+                        break;
+                    default:
+                        result[properties[i]] = {};
+                        break;
+                }
             }
         }
         return result;

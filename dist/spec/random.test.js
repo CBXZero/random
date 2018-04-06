@@ -43,6 +43,42 @@ describe("Random Library - Number", function () {
         Assert.equal(result, value);
     });
 });
+describe("Random Library - DecimalNumber", function () {
+    it("Should not return the same number twice in a row", function () {
+        Assert.notEqual(random_1.Random.DecimalNumber(), random_1.Random.DecimalNumber());
+    });
+    it("Should only return numbers less than or equal to the max number", function () {
+        Assert.isAtMost(random_1.Random.DecimalNumber({ max: 2 }), 2);
+    });
+    it("Should only return numbers greater than or equal to the min number", function () {
+        Assert.isAtLeast(random_1.Random.DecimalNumber({ min: Number.MAX_VALUE - 50 }), Number.MAX_VALUE - 50);
+    });
+    it("Should only return numbers between max and min inclusive", function () {
+        var min = 100;
+        var max = 200;
+        var result = random_1.Random.DecimalNumber({ min: 100, max: 200 });
+        Assert.isAtLeast(result, min);
+        Assert.isAtMost(result, max);
+    });
+    it("Should throw an error when min is greater than max", function () {
+        try {
+            random_1.Random.DecimalNumber({ min: 5, max: 1 });
+        }
+        catch (ex) {
+            return;
+        }
+        Assert.fail("Error wasn't thrown");
+    });
+    it("Should return the number passed in when min and max are the same", function () {
+        var value = 5;
+        var result = random_1.Random.DecimalNumber({ min: value, max: value });
+        Assert.equal(result, value);
+    });
+    it("Should return a number with sufficient number of decimal places", function () {
+        var result = random_1.Random.DecimalNumber({ min: 0, max: 1, maxDecimalPlaces: 10 });
+        Assert.isAtMost(result.toString().length, 12, "Improper length, output number was " + result);
+    });
+});
 describe("Random Library - String", function () {
     it("Should not generate the same string twice", function () {
         Assert.notEqual(random_1.Random.String(), random_1.Random.String());
@@ -114,8 +150,23 @@ describe("Random Library - Boolean", function () {
         results.forEach(function (r) {
             r ? trueCount++ : falseCount++;
         });
-        Assert.closeTo(trueCount, 50, 10);
-        Assert.closeTo(falseCount, 50, 10);
+        Assert.closeTo(trueCount, 50, 15);
+        Assert.closeTo(falseCount, 50, 15);
+    });
+});
+describe("Random Library - Date", function () {
+    it("Does not create the same date twice in a row", function () {
+        Assert.notEqual(random_1.Random.Date(), random_1.Random.Date());
+    });
+    it("Creates a date that is at least before given date", function () {
+        var testDate = new Date();
+        var result = random_1.Random.Date({ before: testDate });
+        Assert.isAtMost(result.valueOf(), testDate.valueOf(), "expected " + result + " to be before " + testDate);
+    });
+    it("Creates a date that is at least after given date", function () {
+        var testDate = new Date();
+        var result = random_1.Random.Date({ after: testDate });
+        Assert.isAtLeast(result.valueOf(), testDate.valueOf(), "expected " + result + " to be after " + testDate);
     });
 });
 describe("Random Library - Object", function () {
@@ -123,5 +174,23 @@ describe("Random Library - Object", function () {
         var firstTest = random_1.Random.Object(TestClass);
         var secondTest = random_1.Random.Object(TestClass);
         Assert.notDeepEqual(firstTest, secondTest);
+    });
+});
+describe("Random Library - Array", function () {
+    it("Should return an array of correct type with two different objects", function () {
+        var result = random_1.Random.Array(TestClass, 2);
+        Assert.notDeepEqual(result[0], result[1]);
+    });
+    it("Should return an array of appropriate length", function () {
+        var result = random_1.Random.Array(TestClass, 500);
+        Assert.equal(result.length, 500);
+    });
+    it("Should return populated objects in the array", function () {
+        var result = random_1.Random.Array(TestClass, 1);
+        Assert.isNotNull(result[0].testString);
+    });
+    it("Should work with non-object Random Arrays", function () {
+        var result = random_1.Random.Array(String, 5);
+        Assert.typeOf(result[0], "string");
     });
 });

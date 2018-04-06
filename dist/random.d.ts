@@ -13,6 +13,16 @@ export declare class Random {
         max?: number;
         min?: number;
     }): number;
+    static DecimalNumber(constraints?: {
+        max?: number;
+        min?: number;
+        maxDecimalPlaces?: number;
+    }): number;
     static Boolean(): boolean;
+    static Date(constraints?: {
+        before?: Date;
+        after?: Date;
+    }): Date;
+    static Array<T>(typeData: new () => T, length: number): T[];
     static Object<T>(typeData: new () => T): T;
 }
