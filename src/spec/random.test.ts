@@ -11,25 +11,25 @@ class TestClass {
     testBoolean: boolean;
     constructor() {
         this.testNumber = 0;
-        this.testString = "";
+        this.testString = ``;
         this.testBoolean = false;
     }
 }
 
-describe("Random Library - Number", () => {
-    it("Should not generate the same number twice", () => {
+describe(`Random Library - Number`, () => {
+    it(`Should not generate the same number twice`, () => {
         Assert.notEqual(Random.Number(), Random.Number());
     });
 
-    it("Should only return numbers less than or equal to the max number", () => {
+    it(`Should only return numbers less than or equal to the max number`, () => {
         Assert.isAtMost(Random.Number({max: 2}), 2);
     });
 
-    it("Should only return numbers greater than or equal to the min number", () => {
+    it(`Should only return numbers greater than or equal to the min number`, () => {
         Assert.isAtLeast(Random.Number({min: Number.MAX_VALUE - 50}), Number.MAX_VALUE - 50);
     });
 
-    it("Should only return numbers between max and min inclusive", () => {
+    it(`Should only return numbers between max and min inclusive`, () => {
         var min = 100;
         var max = 200;
         var result = Random.Number({min: 100, max: 200});
@@ -37,46 +37,46 @@ describe("Random Library - Number", () => {
         Assert.isAtMost(result, max);
     });
 
-    it("Should throw an error when min is greater than max", () => {
+    it(`Should throw an error when min is greater than max`, () => {
         try {
             Random.Number({min:5, max: 1});
         } catch(ex) {
             return;
         }
-        Assert.fail("Error wasn't thrown");
+        Assert.fail(`Error wasn't thrown`);
     });
 
-    it("Should return the number passed in when min and max are the same", () => {
+    it(`Should return the number passed in when min and max are the same`, () => {
         var value = 5;
         var result = Random.Number({min: value, max: value});
         Assert.equal(result, value);
     })
 });
 
-describe("Random Library - String", () => {
-    it("Should not generate the same string twice", () => {
+describe(`Random Library - String`, () => {
+    it(`Should not generate the same string twice`, () => {
         Assert.notEqual(Random.String(), Random.String());
     });
 
-    it("Should not contain characters pased into exclusion string", () => {
-        var exclusionList = "abcdefghijklmnopqrstuvwxyz";
+    it(`Should not contain characters pased into exclusion string`, () => {
+        var exclusionList = `abcdefghijklmnopqrstuvwxyz`;
         var result = Random.String({blackListString: exclusionList});
         for(var i = 0; i < exclusionList.length; i++) {
             Assert.notInclude(result, exclusionList[i]);
         }
     });
 
-    it("Should contain only characters passed into inclusion string", () => {
-        var inclusionList = "abcdefghijklmnopqrstuvwxyz";
-        var derivedExcludedCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    it(`Should contain only characters passed into inclusion string`, () => {
+        var inclusionList = `abcdefghijklmnopqrstuvwxyz`;
+        var derivedExcludedCharacters = `ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()`;
         var result = Random.String({whiteListString: inclusionList});
         for(var i = 0; i < derivedExcludedCharacters.length; i++) {
             Assert.notInclude(result, derivedExcludedCharacters[i]);
         }
     });
 
-    it("Should throw error when no characters are allowed", () => {
-        var inclusionList = "";
+    it(`Should throw error when no characters are allowed`, () => {
+        var inclusionList = ``;
         try {
             Random.String({whiteListString: inclusionList});
         } catch (ex) {
@@ -85,21 +85,43 @@ describe("Random Library - String", () => {
         Assert.fail();
     });
 
-    it("Should create string of at least min length", () => {
+    it(`Should create string of at least min length`, () => {
         var minLength = 5;
         var result = Random.String({minLength: minLength});
         Assert.isAtLeast(result.length, minLength);
     });
 
-    it("Should create string of at most max length", () => {
+    it(`Should create string of at most max length`, () => {
         var maxLength = 100;
         var result = Random.String({maxLength: maxLength});
         Assert.isAtMost(result.length, maxLength);
     });
 });
 
-describe("Random Library - Boolean", () => {
-    it("Should generate booleans close to 50/50", () => {
+describe(`Random Library - RegexString`, () => {
+    it(`Should generate a string that matches the regex expression`, () => {
+        var pattern = /hello World/g;
+        var result = Random.RegexString(pattern);
+        Assert.isTrue(pattern.test(result));
+    });
+
+    it(`Should generate a string that matches the regex expression and doesn't repeat characters exceeding max`, () => {
+        var pattern = /hello World!*/g;
+        var result = Random.RegexString(pattern, {maxRepetition: 10});
+        Assert.isTrue(pattern.test(result), `Did not match pattern`);
+        Assert.isTrue(result.length <= "hello world".length + 10, `Did not respect length constraints, ${result}`);
+    });
+
+    it(`Should generate a string that matches the regex expression and repeats characters at least min`, () => {
+        var pattern = /hello World!*/g;
+        var result = Random.RegexString(pattern, {minRepetition: 100, maxRepetition: 10000});
+        Assert.isTrue(pattern.test(result), `Did not match pattern`);
+        Assert.isTrue(result.length >= "hello world".length + 100, `Did not respect length constraints, ${result}`);
+    });
+});
+
+describe(`Random Library - Boolean`, () => {
+    it(`Should generate booleans close to 50/50`, () => {
         var results = [];
         for(var i=0; i < 100; i++) {
             results.push(Random.Boolean());
@@ -115,8 +137,8 @@ describe("Random Library - Boolean", () => {
     });
 });
 
-describe("Random Library - Object", () => {
-    it("Should generate different objects", () => {
+describe(`Random Library - Object`, () => {
+    it(`Should generate different objects`, () => {
         var firstTest = Random.Object(TestClass);
         var secondTest = Random.Object(TestClass);
 

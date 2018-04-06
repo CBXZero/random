@@ -83,6 +83,13 @@ describe("Random Library - String", function () {
         Assert.isAtMost(result.length, maxLength);
     });
 });
+describe("Random Library - RegexString", function () {
+    it("Should generate a string that matches the regex expression", function () {
+        var pattern = /hello World/g;
+        var result = random_1.Random.RegexString(pattern);
+        Assert.isTrue(pattern.test(result));
+    });
+});
 describe("Random Library - Boolean", function () {
     it("Should generate booleans close to 50/50", function () {
         var results = [];

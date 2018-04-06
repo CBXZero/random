@@ -1,28 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var randexp_1 = require("randexp");
 var Random = /** @class */ (function () {
     function Random() {
     }
     Random.String = function (constraints) {
-        if (constraints === void 0) { constraints = { minLength: 5, maxLength: 20 }; }
+        if (constraints === void 0) { constraints = { minLength: 1, maxLength: 20 }; }
         var possibleChar = constraints.whiteListString == undefined ?
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" : constraints.whiteListString;
-        constraints.
-            blackListString = constraints.blackListString == undefined ? "" : constraints.blackListString;
+        constraints.blackListString =
+            constraints.blackListString == undefined ? "" : constraints.blackListString;
         for (var i = 0; i < constraints.blackListString.length; i++) {
             possibleChar = possibleChar.replace(constraints.blackListString[i], "");
         }
         if (possibleChar.length == 0) {
             throw new Error("No Possible Characters");
         }
-        constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
-        constraints.minLength = constraints.minLength == undefined ? 5 : constraints.minLength;
+        constraints.minLength = constraints.minLength == undefined ? 1 : constraints.minLength;
+        constraints.maxLength = constraints.maxLength == undefined ? constraints.minLength + 20 : constraints.maxLength;
         var length = Random.Number({ min: constraints.minLength, max: constraints.maxLength });
         var result = "";
         for (var i = 0; i < length; i++) {
             result += possibleChar.charAt(Math.floor((Math.random() * possibleChar.length)));
         }
         return result;
+    };
+    Random.RegexString = function (pattern, constraints) {
+        if (constraints === void 0) { constraints = { maxRepetition: 100 }; }
+        var generator = new randexp_1.RandExp(pattern);
+        // constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
+        // generator.max = constraints.maxRepetition;
+        // generator.min
+        //return generator.gen();
+        return "";
     };
     Random.Number = function (constraints) {
         if (constraints === void 0) { constraints = { max: Number.MAX_VALUE, min: Number.MIN_VALUE }; }

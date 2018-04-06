@@ -1,13 +1,16 @@
+import * as RandExp from 'randexp';
+
 export class Random {
 
     static String(constraints: {blackListString?: string, whiteListString?: string, minLength?: number
-    maxLength?: number} = {minLength: 5, maxLength: 20}):string {
+    maxLength?: number} = {minLength: 1, maxLength: 20}):string {
         let possibleChar:string = constraints.whiteListString == undefined ? 
             "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" : constraints.whiteListString;
         
-        constraints.
-        blackListString = constraints.blackListString == undefined ? "" : constraints.blackListString;
-        for(var i=0; i < constraints.blackListString.length; i++) {
+        constraints.blackListString = 
+            constraints.blackListString == undefined ? "" : constraints.blackListString;
+        
+            for(var i=0; i < constraints.blackListString.length; i++) {
             possibleChar = possibleChar.replace(constraints.blackListString[i], "");
         }
 
@@ -15,8 +18,8 @@ export class Random {
             throw new Error("No Possible Characters");
         }
 
-        constraints.maxLength = constraints.maxLength == undefined ? 20 : constraints.maxLength;
-        constraints.minLength = constraints.minLength == undefined ? 5 : constraints.minLength;
+        constraints.minLength = constraints.minLength == undefined ? 1 : constraints.minLength;
+        constraints.maxLength = constraints.maxLength == undefined ? constraints.minLength + 20 : constraints.maxLength;
 
         var length = Random.Number({min: constraints.minLength, max: constraints.maxLength});
 
@@ -26,6 +29,15 @@ export class Random {
         }
 
         return result;
+    }
+
+    static RegexString(pattern: RegExp, constraints: {minRepetition?: number, maxRepetition?: number} = {minRepetition: 10, maxRepetition: 100}): string {
+        var generator = new RandExp(pattern);
+        constraints.minRepetition = constraints.minRepetition == undefined ? 10 : constraints.minRepetition;
+        constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
+        generator.max = constraints.maxRepetition;
+        generator.min = constraints.minRepetition;
+        return generator.gen();
     }
 
     static Number(constraints: {max?: number, min?: number} = {max: Number.MAX_VALUE, min: Number.MIN_VALUE}): number {
