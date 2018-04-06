@@ -89,6 +89,18 @@ describe("Random Library - RegexString", function () {
         var result = random_1.Random.RegexString(pattern);
         Assert.isTrue(pattern.test(result));
     });
+    it("Should generate a string that matches the regex expression and doesn't repeat characters exceeding max", function () {
+        var pattern = /hello World!*/g;
+        var result = random_1.Random.RegexString(pattern, { maxRepetition: 10 });
+        Assert.isTrue(pattern.test(result), "Did not match pattern");
+        Assert.isTrue(result.length <= "hello world".length + 10, "Did not respect length constraints, " + result);
+    });
+    it("Should generate a string that matches the regex expression and repeats characters at least min", function () {
+        var pattern = /hello World!*/g;
+        var result = random_1.Random.RegexString(pattern, { minRepetition: 100, maxRepetition: 10000 });
+        Assert.isTrue(pattern.test(result), "Did not match pattern");
+        Assert.isTrue(result.length >= "hello world".length + 100, "Did not respect length constraints, " + result);
+    });
 });
 describe("Random Library - Boolean", function () {
     it("Should generate booleans close to 50/50", function () {

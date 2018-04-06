@@ -6,6 +6,7 @@ export declare class Random {
         maxLength?: number;
     }): string;
     static RegexString(pattern: RegExp, constraints?: {
+        minRepetition?: number;
         maxRepetition?: number;
     }): string;
     static Number(constraints?: {

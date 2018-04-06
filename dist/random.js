@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var randexp_1 = require("randexp");
+var RandExp = require("randexp");
 var Random = /** @class */ (function () {
     function Random() {
     }
@@ -26,13 +26,13 @@ var Random = /** @class */ (function () {
         return result;
     };
     Random.RegexString = function (pattern, constraints) {
-        if (constraints === void 0) { constraints = { maxRepetition: 100 }; }
-        var generator = new randexp_1.RandExp(pattern);
-        // constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
-        // generator.max = constraints.maxRepetition;
-        // generator.min
-        //return generator.gen();
-        return "";
+        if (constraints === void 0) { constraints = { minRepetition: 10, maxRepetition: 100 }; }
+        var generator = new RandExp(pattern);
+        constraints.minRepetition = constraints.minRepetition == undefined ? 10 : constraints.minRepetition;
+        constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
+        generator.max = constraints.maxRepetition;
+        generator.min = constraints.minRepetition;
+        return generator.gen();
     };
     Random.Number = function (constraints) {
         if (constraints === void 0) { constraints = { max: Number.MAX_VALUE, min: Number.MIN_VALUE }; }
