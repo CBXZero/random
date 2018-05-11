@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var RandExp = require("randexp");
 var Random = /** @class */ (function () {
     function Random() {
     }
@@ -27,12 +26,8 @@ var Random = /** @class */ (function () {
     };
     Random.RegexString = function (pattern, constraints) {
         if (constraints === void 0) { constraints = { minRepetition: 10, maxRepetition: 100 }; }
-        var generator = new RandExp(pattern);
-        constraints.minRepetition = constraints.minRepetition == undefined ? 10 : constraints.minRepetition;
-        constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
-        generator.max = constraints.maxRepetition;
-        generator.min = constraints.minRepetition;
-        return generator.gen();
+        console.log("Regex String is not currently working.");
+        return this.String();
     };
     Random.Number = function (constraints) {
         if (constraints === void 0) { constraints = { max: Number.MAX_VALUE, min: Number.MIN_VALUE }; }

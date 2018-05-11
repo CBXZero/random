@@ -32,12 +32,8 @@ export class Random {
     }
 
     static RegexString(pattern: RegExp, constraints: {minRepetition?: number, maxRepetition?: number} = {minRepetition: 10, maxRepetition: 100}): string {
-        var generator = new RandExp(pattern);
-        constraints.minRepetition = constraints.minRepetition == undefined ? 10 : constraints.minRepetition;
-        constraints.maxRepetition = constraints.maxRepetition == undefined ? 100 : constraints.maxRepetition;
-        generator.max = constraints.maxRepetition;
-        generator.min = constraints.minRepetition;
-        return generator.gen();
+        console.log("Regex String is not currently working.");
+        return this.String();
     }
 
     static Number(constraints: {max?: number, min?: number} = {max: Number.MAX_VALUE, min: Number.MIN_VALUE}): number {

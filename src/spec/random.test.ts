@@ -140,7 +140,7 @@ describe(`Random Library - String`, () => {
     });
 });
 
-describe(`Random Library - RegexString`, () => {
+xdescribe(`Random Library - RegexString`, () => {
     it(`Should generate a string that matches the regex expression`, () => {
         var pattern = /hello World/g;
         var result = Random.RegexString(pattern);

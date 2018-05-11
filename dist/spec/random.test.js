@@ -119,7 +119,7 @@ describe("Random Library - String", function () {
         Assert.isAtMost(result.length, maxLength);
     });
 });
-describe("Random Library - RegexString", function () {
+xdescribe("Random Library - RegexString", function () {
     it("Should generate a string that matches the regex expression", function () {
         var pattern = /hello World/g;
         var result = random_1.Random.RegexString(pattern);
